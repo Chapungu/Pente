@@ -7,6 +7,7 @@
 
 class BoardWidget : public QWidget
 {
+    Q_OBJECT
 public:
     BoardWidget(QWidget *parent = nullptr);
 

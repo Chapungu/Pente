@@ -1,13 +1,25 @@
 #include "gamecontrol.h"
+#include "BoardCanvas.h"
 
-GameControl::GameControl(QWidget* parent) {}
+#include <QDebug>
 
-void GameControl::setPeice(int row, int column, int player)
+GameControl::GameControl(QWidget* parent)
 {
+
+}
+
+void GameControl::PlacePieceSL(int row, int column, int player)
+{
+    qDebug() << "PlacePieceSL activated";
     innerBoard[row][column] = player;
 }
 
-void GameControl::clearPeice(int row, int column)
+void GameControl::clearPiece(int row, int column)
 {
     innerBoard[row][column] = 0;
+}
+
+const int GameControl::getPiece(int row, int column)
+{
+    return innerBoard[row][column];
 }

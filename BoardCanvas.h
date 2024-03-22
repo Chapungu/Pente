@@ -9,6 +9,7 @@ namespace drawing{
 
 class BoardCanvas : public QWidget
 {
+    Q_OBJECT
 public:
     BoardCanvas(QWidget* parent);
 
@@ -23,8 +24,8 @@ public:
     void AddDrawingFunctions();
 
 
-    void AddPeice(DrawFunction f){m_DrawPeices.push_back(f);}
-    void ClearPeices() { m_DrawPeices.clear(); }
+    void AddPeice(DrawFunction f){m_DrawPieces.push_back(f);}
+    void ClearPeices() { m_DrawPieces.clear(); }
 
     void AddDrawBoard(DrawFunction f) {m_DrawBoard.push_back(f);}
     void ResetBoard() { m_DrawBoard.clear(); }
@@ -37,10 +38,19 @@ public:
     bool m_updateBoard{true};
 
     void mouseMoveEvent(QMouseEvent *e) override;
-    QPointF slotPeice();
+    void mousePressEvent(QMouseEvent* e) override;
+    QPointF slotPiece();
 
-    float xLinesPixelValues[50];
-    float yLinesPixelValues[50];
+    QPointF GameCoordtoPixel(int row, int column);
+    void PixelCoordtoGame();
+    int xLinesPixelValues[50];
+    int yLinesPixelValues[50];
+
+    int x;
+    int y;
+
+Q_SIGNALS:
+    void PlacePieceSG(int x, int y, int player);
 
 protected:
 
@@ -57,7 +67,7 @@ protected:
 
 
     std::vector<DrawFunction> m_DrawBoard;
-    std::vector<DrawFunction> m_DrawPeices;
+    std::vector<DrawFunction> m_DrawPieces;
     std::vector<DrawFunction> m_DrawOverlays;
 
 };

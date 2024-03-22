@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Qt specific
+build-*     # Ignore build directories
+*.pro.user  # Ignore Qt project user settings files
+*.qbs.user  # Ignore Qbs project user settings files
+*.qgs       # Ignore Qt Creator files
+*.qmlc      # Ignore compiled QML files
+*.moc       # Ignore Qt Meta-Object Compiler files
+*.qm        # Ignore Qt message files
+
