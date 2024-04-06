@@ -19,7 +19,6 @@ public:
 
     using DrawFunction = std::function<void(kapunzu::drawing::BoardCanvas& canvas, QPainter& painter)>;
 
-    void PopulateLineCoords();
     QRect GetRect(){return rect();}
     void AddDrawingFunctions();
 
@@ -39,12 +38,7 @@ public:
 
     void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent* e) override;
-    QPointF slotPiece();
 
-    QPointF GameCoordtoPixel(int row, int column);
-    void PixelCoordtoGame();
-    int xLinesPixelValues[50];
-    int yLinesPixelValues[50];
 
     int x;
     int y;

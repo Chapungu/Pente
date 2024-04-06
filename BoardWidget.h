@@ -11,7 +11,11 @@ class BoardWidget : public QWidget
 public:
     BoardWidget(QWidget *parent = nullptr);
 
-
+    void add_drawing_functions();
+    QPointF slotPiece();
+    void PopulateLineCoords();
+    QPointF GameCoordtoPixel(int row, int column);
+    void PixelCoordtoGame();
 
 protected:
 
