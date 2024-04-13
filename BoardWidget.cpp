@@ -36,24 +36,14 @@ void BoardWidget::add_drawing_functions()
 			for (int y = 0; y < 50; y++)
 			{
 				int player = m_innerGame->getPiece(x, y);
-				if (player == 1)
-				{
-					painter.save();
-					painter.setBrush(QColor(255, 255, 255));
-					//qDebug() << "Mouse Position = " << MousePos << " Slot Position = " << Position;
-					QPointF position = GameCoordtoPixel(x, y);
-					painter.drawEllipse(position, 7, 7);
-					painter.restore();
-				}
-				else if (player == 2)
-				{
-					painter.save();
-					painter.setBrush(QColor(0, 0, 0));
-					//qDebug() << "Mouse Position = " << MousePos << " Slot Position = " << Position;
-					QPointF position = GameCoordtoPixel(x, y);
-					painter.drawEllipse(position, 7, 7);
-					painter.restore();
-				}
+				if (player == 0) { continue; }
+				painter.save();
+				painter.setBrush(m_innerGame->getPlayerColor(player));
+				//qDebug() << "Mouse Position = " << MousePos << " Slot Position = " << Position;
+				QPointF position = GameCoordtoPixel(x, y);
+				painter.drawEllipse(position, 7, 7);
+				painter.restore();
+			
 			}
 		}
 	};
@@ -80,7 +70,7 @@ void BoardWidget::add_drawing_functions()
 	auto drawHeldPeice = [&](kapunzu::drawing::BoardCanvas& canvas, QPainter& painter)
 	{
 		painter.save();
-		painter.setBrush(activePlayerColor);
+		painter.setBrush(m_innerGame->getPlayerColor(m_innerGame->getCurrentPlayer()));
 		QPointF Pos = slotPiece(m_canvas->mapFromGlobal(QCursor::pos()));
 		//qInfo() << "Pos = x: " << Pos.x() << " y: " << Pos.y();
 		painter.drawEllipse(Pos, 7, 7);

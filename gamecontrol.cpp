@@ -10,7 +10,8 @@ GameControl::GameControl(QWidget* parent)
 
 void GameControl::PlacePiece(int row, int column, int player)
 {
-    qDebug() << "PlacePieceSL activated" << " row = " << row << " column = " << column << " player = " << player;
+    //qDebug() << "PlacePieceSL activated" << " row = " << row << " column = " << column << " player = " << player;
+    if (!CheckValidMove(row, column)) { return; }
     innerBoard[row][column] = player;
     this->nextPlayer();
 }
@@ -35,4 +36,20 @@ void GameControl::nextPlayer()
 int GameControl::getCurrentPlayer()
 {
     return this->State.activePlayer;
+}
+
+QColor GameControl::getPlayerColor(int player)
+{
+    return State.Get_Color.value(player);
+}
+
+bool GameControl::CheckValidMove(int row, int column)
+{
+    if (innerBoard[row][column] != 0) { return false; }
+    return true;
+}
+
+void GameControl::CheckTakeMove(int row, int column)
+{
+
 }
