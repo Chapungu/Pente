@@ -7,64 +7,69 @@
 namespace kapunzu{
 namespace drawing{
 
-class BoardCanvas : public QWidget
-{
-    Q_OBJECT
-public:
-    BoardCanvas(QWidget* parent);
-
-    ~BoardCanvas(){}
-
-    void resizeEvent(QResizeEvent *e) override;
-
-    using DrawFunction = std::function<void(kapunzu::drawing::BoardCanvas& canvas, QPainter& painter)>;
-
-    QRect GetRect(){return rect();}
-    void AddDrawingFunctions();
-
-
-    void AddPeice(DrawFunction f){m_DrawPieces.push_back(f);}
-    void ClearPeices() { m_DrawPieces.clear(); }
-
-    void AddDrawBoard(DrawFunction f) {m_DrawBoard.push_back(f);}
-    void ResetBoard() { m_DrawBoard.clear(); }
-
-    void AddDrawOverlay(DrawFunction f) {m_DrawOverlays.push_back(f);}
-    void ResetOverlay() { m_DrawOverlays.clear(); }
-
-    bool m_updateOverlay{false};
-    bool m_updatePeices{false};
-    bool m_updateBoard{true};
-
-    void mouseMoveEvent(QMouseEvent *e) override;
-    void mousePressEvent(QMouseEvent* e) override;
-
-
-    int x;
-    int y;
-
-Q_SIGNALS:
-    void PlacePieceSG(int x, int y, int player);
-
-protected:
-
-    void paintEvent(QPaintEvent * e) override;
-   // Borders of the primary drawing Area
-    int m_borderLeft{ 0 };
-    int m_borderRight{ 0 };
-    int m_borderTop{ 0 };
-    int m_borderBottom{ 0 };
 
 
 
-    QPointF MousePos{0,0};
+	class BoardCanvas : public QWidget
+	{
+	    Q_OBJECT
+	public:
+	    BoardCanvas(QWidget* parent);
+
+		~BoardCanvas();
+
+	    void resizeEvent(QResizeEvent *e) override;
+
+	    using DrawFunction = std::function<void(kapunzu::drawing::BoardCanvas& canvas, QPainter& painter)>;
+
+	    QRect GetRect(){return rect();}
+	    void AddDrawingFunctions();
 
 
-    std::vector<DrawFunction> m_DrawBoard;
-    std::vector<DrawFunction> m_DrawPieces;
-    std::vector<DrawFunction> m_DrawOverlays;
 
-};
+	    void AddPeice(DrawFunction f){m_DrawPieces.push_back(f);}
+	    void ClearPeices() { m_DrawPieces.clear(); }
+
+	    void AddDrawBoard(DrawFunction f) {m_DrawBoard.push_back(f);}
+	    void ResetBoard() { m_DrawBoard.clear(); }
+
+	    void AddDrawOverlay(DrawFunction f) {m_DrawOverlays.push_back(f);}
+	    void ResetOverlay() { m_DrawOverlays.clear(); }
+
+	    bool m_updateOverlay{false};
+	    bool m_updatePeices{false};
+	    bool m_updateBoard{true};
+
+		
+	    void mouseMoveEvent(QMouseEvent* e) override;
+	    void mousePressEvent(QMouseEvent* e) override;
+
+
+	Q_SIGNALS:
+	    void PlacePieceSG(const QPoint& pos);
+		
+
+	protected:
+
+	    void paintEvent(QPaintEvent * e) override;
+	   // Borders of the primary drawing Area
+	    int m_borderLeft{ 0 };
+	    int m_borderRight{ 0 };
+	    int m_borderTop{ 0 };
+	    int m_borderBottom{ 0 };
+
+
+
+
+
+	    std::vector<DrawFunction> m_DrawBoard;
+	    std::vector<DrawFunction> m_DrawPieces;
+	    std::vector<DrawFunction> m_DrawOverlays;
+
+	private:
+
+
+	};
 
 
 }

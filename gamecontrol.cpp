@@ -8,10 +8,11 @@ GameControl::GameControl(QWidget* parent)
 
 }
 
-void GameControl::PlacePieceSL(int row, int column, int player)
+void GameControl::PlacePiece(int row, int column, int player)
 {
-    qDebug() << "PlacePieceSL activated";
+    qDebug() << "PlacePieceSL activated" << " row = " << row << " column = " << column << " player = " << player;
     innerBoard[row][column] = player;
+    this->nextPlayer();
 }
 
 void GameControl::clearPiece(int row, int column)
@@ -22,4 +23,16 @@ void GameControl::clearPiece(int row, int column)
 const int GameControl::getPiece(int row, int column)
 {
     return innerBoard[row][column];
+}
+
+void GameControl::nextPlayer()
+{
+    int players = 2;
+    if (this->State.activePlayer == players) { this->State.activePlayer = 1; }
+    else { this->State.activePlayer++; }
+}
+
+int GameControl::getCurrentPlayer()
+{
+    return this->State.activePlayer;
 }

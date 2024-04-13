@@ -6,6 +6,22 @@
 namespace kapunzu {
     namespace drawing {
 
+        BoardCanvas::BoardCanvas(QWidget* parent) :QWidget(parent)
+        {
+            qDebug() << "BoardCanvas:: " << "width = " << this->width() << " height = " << this->height();
+            this->setAttribute(Qt::WA_MouseTracking);
+
+            AddDrawingFunctions();
+
+        }
+
+        BoardCanvas::~BoardCanvas()
+        {
+            m_DrawBoard.clear();
+            m_DrawPieces.clear();
+            m_DrawOverlays.clear();
+        }
+
         void BoardCanvas::paintEvent(QPaintEvent* e)
         {
             QPainter painter(this);
@@ -30,15 +46,6 @@ namespace kapunzu {
             }m_updateOverlay = true;
         }
 
-        BoardCanvas::BoardCanvas(QWidget* parent) :QWidget(parent)
-        {
-            qDebug() << "BoardCanvas:: " << "width = " << this->width() << " height = " << this->height();
-            this->setAttribute(Qt::WA_MouseTracking);
-
-            AddDrawingFunctions();
-
-        }
-
         void BoardCanvas::resizeEvent(QResizeEvent* e)
         {
 
@@ -52,19 +59,17 @@ namespace kapunzu {
 
         void BoardCanvas::mouseMoveEvent(QMouseEvent* e)
         {
-            MousePos.setY(e->y());
-            MousePos.setX(e->x());
             m_updateOverlay = true;
-            this->update();
+            update();
+            QWidget::mouseMoveEvent(e);
         }
 
         void BoardCanvas::mousePressEvent(QMouseEvent* e)
         {
-            emit PlacePieceSG(x, y, 1);
-            qDebug() << "Mouse Pressed";
-            QWidget::mousePressEvent(e);
+            if (e->button() == Qt::LeftButton) {
+                emit PlacePieceSG(e->pos());
+            }
         }
-
 
     }
 }
